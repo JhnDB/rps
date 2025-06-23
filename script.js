@@ -18,26 +18,27 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
+    const results = document.querySelector("#results");
     if (humanChoice == "rock" && computerChoice == "scissors") {
-        console.log("You win! Rock beats scissors.");
+        results.textContent = "You win! Rock beats scissors.";
         humanScore++;
     } else if (humanChoice == "rock" && computerChoice == "paper") {
-        console.log("You lose! Rock does not beat paper.");
+        results.textContent = "You lose! Rock does not beat paper.";
         computerScore++;
     } else if (humanChoice == "paper" && computerChoice == "scissors") {
-        console.log("You lose! Paper does not beat scissors.");
+        results.textContent = "You lose! Paper does not beat scissors.";
         computerScore++;
     } else if (humanChoice == "paper" && computerChoice == "rock") {
-        console.log("You win! Paper beats rock.");
+        results.textContent = "You win! Paper beats rock.";
         humanScore++;
     } else if (humanChoice == "scissors" && computerChoice == "rock") {
-        console.log("You lose! Scissors does not beat rock.");
+        results.textContent = "You lose! Scissors does not beat rock.";
         computerScore++;
     } else if (humanChoice == "scissors" && computerChoice == "paper") {
-        console.log("You win! Scissors beats paper.");
+        results.textContent = "You win! Scissors beats paper.";
         humanScore++;
     } else {
-        console.log("Tie!");
+        results.textContent = "Tie!";
     }
 }
 
@@ -47,6 +48,19 @@ function playGame() {
     console.log("COMPUTER: " + computerScore);
 }
 
-for (let i = 0; i < 5; i++) {
-    playGame();
-}
+const choices = document.querySelector("#choices");
+const scores = document.querySelector("#scores");
+
+choices.addEventListener("click", (e) => {
+    playRound(e.target.id, getComputerChoice());
+    scores.textContent = `HUMAN ${humanScore}, COMPUTER ${computerScore}`;
+    if (humanScore >= 5 || computerScore >= 5) {
+        const winner = document.createElement("h2");
+        if (humanScore >= 5) {
+            winner.textContent = "YOU WIN!";
+        } else {
+            winner.textContent = "YOU LOSE!";
+        }
+        document.body.appendChild(winner);
+    }
+});
